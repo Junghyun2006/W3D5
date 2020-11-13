@@ -33,13 +33,26 @@ class PolyTreeNode
         self.children.include?(child_node) ? (child_node.parent = nil) : (raise "node is not a child") 
     end
 
-    def dfs(target_value)
-        return nil if children.empty?
-        return self if value == target_value
 
-        children.each_with_index do [child,i]
-            # return dfs(children[i]) if children[i]
-            child.dfs(target_value)
+
+
+    def dfs(target_value) #node.dfs(target_value)
+        return self if value == target_value
+       
+        children.each do |child|
+            search = child.dfs(target_value)
+            return search unless search == nil
+        end
+        return nil if children.empty?
+    end
+
+    def bfs(target_value)
+        queue = []
+        queue << self
+        until queue.empty? 
+            first = queue.shift
+            return first if first.value == target_value
+            queue += first.children
         end
     end
 

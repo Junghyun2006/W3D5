@@ -8,10 +8,13 @@ class PolyTreeNode
         @children = []
     end
 
-    def parent=
-        node2 << node1 @childen 
-        node2.parent = node1
-        node3.parent = node1
+    def parent=(parent)
+        @parent = parent 
+        if !parent.children.include?(self) 
+            parent.children << self
+        end
+        
     end
 
 end
+

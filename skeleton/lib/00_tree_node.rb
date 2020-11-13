@@ -1,3 +1,5 @@
+
+
 class PolyTreeNode
 
     attr_reader :value, :parent, :children
@@ -8,12 +10,17 @@ class PolyTreeNode
         @children = []
     end
 
+    def inspect
+        @value.inspect
+    end
+
     def parent=(parent)
-        @parent = parent 
-        if !parent.children.include?(self) 
+        self.parent.children.delete(self) if self.parent != nil 
+        @parent = parent
+      
+        if  parent && !parent.children.include?(self) 
             parent.children << self
         end
-        
     end
 
 end

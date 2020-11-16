@@ -14,12 +14,12 @@ class PolyTreeNode
         @value.inspect
     end
 
-    def parent=(parent)
-        self.parent.children.delete(self) if self.parent != nil 
-        @parent = parent
+    def parent=(new_parent)
+        @parent.children.delete(self) if @parent != nil 
+        @parent = new_parent
       
-        if  parent && !parent.children.include?(self) 
-            parent.children << self
+        if  new_parent && !new_parent.children.include?(self) 
+            new_parent.children << self
         end
     end
 
@@ -33,20 +33,17 @@ class PolyTreeNode
         self.children.include?(child_node) ? (child_node.parent = nil) : (raise "node is not a child") 
     end
 
-
-
-
-    def dfs(target_value) #node.dfs(target_value)
+    def dfs(target_value) #node.dfs(target_value) LIFO
         return self if value == target_value
        
         children.each do |child|
             search = child.dfs(target_value)
             return search unless search == nil
         end
-        return nil if children.empty?
+        nil
     end
 
-    def bfs(target_value)
+    def bfs(target_value) #FIFO
         queue = []
         queue << self
         until queue.empty? 
@@ -54,7 +51,7 @@ class PolyTreeNode
             return first if first.value == target_value
             queue += first.children
         end
+        return nil
     end
-
 end
 
